@@ -567,10 +567,7 @@ void ECTransaction::generate_rollback(
   }
   if (entry) {
     if (did_append) {
-      lrb.append(
-	sinfo.aligned_chunk_offset_to_logical_offset(
-	  old_size
-	  ));
+      lrb.append(old_size);
     }
     entry->mark_local_rollback(
       lrb,
