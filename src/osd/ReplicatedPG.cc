@@ -8557,7 +8557,7 @@ void ReplicatedPG::issue_repop(RepGather *repop, OpContext *ctx)
     assert(ctx->at_version >= projected_last_update);
   }
   for (auto &&entry: ctx->log) {
-    pending_log.add(entry);
+    projected_log.add(entry);
   }
   pgbackend->submit_transaction(
     soid,
