@@ -2692,7 +2692,7 @@ struct pg_log_entry_t {
       (op == MODIFY || op == DELETE || op == ERROR);
   }
 
-  bool is_rollforward() const { /* TODO SAM DNM */ return false; }
+  bool is_rollforward() const { return transaction_info.is_rollforward(); }
   bool can_rollback() const { return transaction_info.can_rollback(); }
 
   void mark_unrollbackable(bool legacy) {
