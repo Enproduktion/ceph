@@ -942,7 +942,7 @@ void PG::clear_primary_state()
   min_last_complete_ondisk = eversion_t();
   pg_trim_to = eversion_t();
   might_have_unfound.clear();
-  projected_log = IndexedLog();
+  projected_log = PGLog::IndexedLog();
 
   last_update_ondisk = eversion_t();
 
@@ -2484,7 +2484,7 @@ void PG::update_heartbeat_peers()
 }
 
 
-bool ReplicatedPG::check_in_progress_op(
+bool PG::check_in_progress_op(
   const osd_reqid_t &r,
   eversion_t *replay_version,
   version_t *user_version,
