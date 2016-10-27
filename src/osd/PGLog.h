@@ -1187,8 +1187,10 @@ public:
           // rollforward entries mean that the on-disk object won't match the
           // the log until rolled-forward, skip in the check
 	  if (i->version > log.get_can_rollback_to() &&
-	      i->is_rollforward())
+	      i->is_rollforward()) {
 	    checked.insert(i->soid);
+	    continue;
+	  }
 
 	  if (i->is_delete()) continue;
 
