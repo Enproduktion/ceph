@@ -8555,7 +8555,9 @@ void ReplicatedPG::issue_repop(RepGather *repop, OpContext *ctx)
     unlock_snapset_obc ? ctx->snapset_obc : ObjectContextRef());
   if (!(ctx->log.empty())) {
     assert(ctx->at_version >= projected_last_update);
-    projected_last_update = ctx->at_version;
+  }
+  for (auto &&entry: ctx->log) {
+    pending_log.add(entry);
   }
   pgbackend->submit_transaction(
     soid,

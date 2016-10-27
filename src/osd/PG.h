@@ -838,6 +838,7 @@ protected:
   // Callbacks should assume pg (and nothing else) is locked
   map<hobject_t, list<Context*>, hobject_t::BitwiseComparator> callbacks_for_degraded_object;
 
+  PGLog::IndexedLog pending_log;
   bool check_in_progress_op(
     const osd_reqid_t &r,
     eversion_t *replay_version,

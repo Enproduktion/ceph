@@ -41,7 +41,6 @@ PGLog::IndexedLog PGLog::IndexedLog::split_out_child(
 }
 
 void PGLog::IndexedLog::trim(
-  LogEntryHandler *handler,
   eversion_t s,
   set<eversion_t> *trimmed)
 {
@@ -122,7 +121,7 @@ void PGLog::trim(
     assert(trim_to <= info.last_complete);
 
     dout(10) << "trim " << log << " to " << trim_to << dendl;
-    log.trim(handler, trim_to, &trimmed);
+    log.trim(trim_to, &trimmed);
     info.log_tail = log.tail;
   }
 }

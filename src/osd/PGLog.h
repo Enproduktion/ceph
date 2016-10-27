@@ -73,6 +73,7 @@ struct PGLog : DoutPrefixProvider {
     char buf[512];
   };
 
+public:
   /**
    * IndexLog - adds in-memory index of the log, by oid.
    * plus some methods to manipulate it all.
@@ -460,7 +461,6 @@ struct PGLog : DoutPrefixProvider {
     }
 
     void trim(
-      LogEntryHandler *handler,
       eversion_t s,
       set<eversion_t> *trimmed);
 
@@ -610,7 +610,6 @@ public:
     ObjectStore::Transaction *t);
 
   void trim(
-    LogEntryHandler *handler,
     eversion_t trim_to,
     pg_info_t &info);
 
