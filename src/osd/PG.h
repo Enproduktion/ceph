@@ -838,6 +838,12 @@ protected:
   // Callbacks should assume pg (and nothing else) is locked
   map<hobject_t, list<Context*>, hobject_t::BitwiseComparator> callbacks_for_degraded_object;
 
+  bool check_in_progress_op(
+    const osd_reqid_t &r,
+    eversion_t *replay_version,
+    version_t *user_version,
+    int *return_code) const;
+    
   map<eversion_t,
       list<pair<OpRequestRef, version_t> > > waiting_for_ack, waiting_for_ondisk;
 

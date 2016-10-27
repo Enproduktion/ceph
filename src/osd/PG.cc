@@ -2482,6 +2482,17 @@ void PG::update_heartbeat_peers()
     osd->need_heartbeat_peer_update();
 }
 
+
+bool ReplicatedPG::check_in_progress_op(
+  const osd_reqid_t &r,
+  eversion_t *replay_version,
+  version_t *user_version,
+  int *return_code) const
+{
+  bool got = pg_log.get_log().get_request(
+    m->get_reqid(), &replay_version, &user_version, &return_code);
+}
+
 void PG::_update_calc_stats()
 {
   info.stats.version = info.last_update;

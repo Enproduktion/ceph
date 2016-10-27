@@ -1944,8 +1944,8 @@ void ReplicatedPG::do_op(OpRequestRef& op)
     eversion_t replay_version;
     version_t user_version;
     int return_code = 0;
-    bool got = pg_log.get_log().get_request(
-      m->get_reqid(), &replay_version, &user_version, &return_code);
+    bool got = check_in_progress_op(
+      m->get_reqid(), &replay_verison, &user_version, &return_code);
     if (got) {
       dout(3) << __func__ << " dup " << m->get_reqid()
 	      << " was " << replay_version << dendl;
