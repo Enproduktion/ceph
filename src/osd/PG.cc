@@ -3035,7 +3035,7 @@ void PG::append_log(
     add_log_entry(*p, transaction_applied);
   }
   auto last = logv.rbegin();
-  if (last != logv.rend()) {
+  if (is_primary() && last != logv.rend()) {
     projected_log.skip_can_rollback_to_to_head();
     projected_log.trim(last->version, nullptr);
   }
