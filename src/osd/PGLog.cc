@@ -111,7 +111,6 @@ void PGLog::clear_info_log(
 }
 
 void PGLog::trim(
-  LogEntryHandler *handler,
   eversion_t trim_to,
   pg_info_t &info)
 {

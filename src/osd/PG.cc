@@ -942,7 +942,7 @@ void PG::clear_primary_state()
   min_last_complete_ondisk = eversion_t();
   pg_trim_to = eversion_t();
   might_have_unfound.clear();
-  pending_log = IndexedLog();
+  projected_log = IndexedLog();
 
   last_update_ondisk = eversion_t();
 
@@ -2490,8 +2490,9 @@ bool ReplicatedPG::check_in_progress_op(
   version_t *user_version,
   int *return_code) const
 {
-  return pending_log.get_request(r, replay_version, user_version, return_code) ||
-    pg_log.get_log().get_request(r, replay_version, user_version, return_code);
+  return (
+    projected_log.get_request(r, replay_version, user_version, return_code) ||
+    pg_log.get_log().get_request(r, replay_version, user_version, return_code));
 }
 
 void PG::_update_calc_stats()
@@ -3035,8 +3036,8 @@ void PG::append_log(
   }
   auto last = logv.rbegin();
   if (last != logv.rend()) {
-    pending_log.skip_can_rollback_to_to_head();
-    pending_log.trim(last->version, nullptr);
+    projected_log.skip_can_rollback_to_to_head();
+    projected_log.trim(last->version, nullptr);
   }
 
   if (transaction_applied && roll_forward_to > pg_log.get_can_rollback_to()) {
